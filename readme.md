@@ -11,7 +11,7 @@
 [![Render](https://img.shields.io/badge/Hosted%20on-Render-46E3B7)](https://careconnect.onrender.com)
 
 🌐 **Live Demo:** [https://careconnect.onrender.com](https://careconnect.onrender.com)  
-📁 **Repository:** [https://github.com/team-parallax/careconnect](https://github.com/team-parallax/careconnect)  
+📁 **Repository:** [https://github.com/Naman1313/CareConnect](https://github.com/Naman1313/CareConnect)  
 📄 **License:** [MIT](https://github.com/team-parallax/careconnect/blob/main/LICENSE)
 
 ---
@@ -43,7 +43,7 @@ npm install
 
 ### 1. Clone the repository
 ```bash
-git clone https://github.com/team-parallax/careconnect.git
+git clone https://github.com/Naman1313/CareConnect
 cd careconnect
 ```
 
