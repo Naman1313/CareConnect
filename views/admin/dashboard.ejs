@@ -1,0 +1,62 @@
+<%- include('../partials/head') %>
+<%- include('../partials/navbar') %>
+<div class="dashboard-wrapper">
+  <aside class="sidebar">
+    <div class="sidebar-logo"><i class="fas fa-heartbeat green me-2"></i>Care<span class="green">Connect</span></div>
+    <a href="/admin/dashboard" class="sidebar-link active"><span class="sidebar-icon"><i class="fas fa-th-large"></i></span><span>Dashboard</span></a>
+    <a href="/admin/doctors" class="sidebar-link"><span class="sidebar-icon"><i class="fas fa-user-md"></i></span><span>Doctors</span><% if(unverifiedDoctors.length > 0) { %><span class="sidebar-badge red"><%= unverifiedDoctors.length %></span><% } %></a>
+    <a href="/admin/patients" class="sidebar-link"><span class="sidebar-icon"><i class="fas fa-users"></i></span><span>Patients</span></a>
+    <a href="/auth/logout" class="sidebar-link"><span class="sidebar-icon"><i class="fas fa-sign-out-alt"></i></span><span>Logout</span></a>
+  </aside>
+  <main class="dashboard-content">
+    <%- include('../partials/flash') %>
+    <div class="dash-topbar">
+      <div>
+        <h4 class="fw-800 mb-0">Admin Dashboard</h4>
+        <p class="text-muted small mb-0">CareConnect Platform Management</p>
+      </div>
+    </div>
+    <div class="row g-3 mb-4">
+      <div class="col-6 col-md-3"><div class="stat-card-dash"><div class="stat-icon-dash si-purple"><i class="fas fa-users"></i></div><div><div class="stat-val"><%= totalUsers %></div><div class="stat-lbl">Total Users</div></div></div></div>
+      <div class="col-6 col-md-3"><div class="stat-card-dash"><div class="stat-icon-dash si-green"><i class="fas fa-user-md"></i></div><div><div class="stat-val"><%= totalDoctors %></div><div class="stat-lbl">Doctors</div></div></div></div>
+      <div class="col-6 col-md-3"><div class="stat-card-dash"><div class="stat-icon-dash si-blue"><i class="fas fa-user-injured"></i></div><div><div class="stat-val"><%= totalPatients %></div><div class="stat-lbl">Patients</div></div></div></div>
+      <div class="col-6 col-md-3"><div class="stat-card-dash"><div class="stat-icon-dash si-red"><i class="fas fa-file-medical"></i></div><div><div class="stat-val"><%= totalRecords %></div><div class="stat-lbl">Records</div></div></div></div>
+    </div>
+    <div class="cc-card">
+      <div class="cc-card-header">
+        <h6><i class="fas fa-clock me-2" style="color:#f59e0b"></i>Pending Doctor Verifications (<%= unverifiedDoctors.length %>)</h6>
+        <a href="/admin/doctors" class="btn btn-outline-purple btn-sm px-3">View All</a>
+      </div>
+      <div class="p-3">
+        <% if (unverifiedDoctors.length === 0) { %>
+          <div class="text-center py-4 text-muted">
+            <i class="fas fa-check-circle fa-3x mb-3" style="color:var(--green);opacity:0.5"></i>
+            <p>All doctors verified!</p>
+          </div>
+        <% } else { %>
+          <div class="table-responsive">
+            <table class="table cc-table mb-0">
+              <thead><tr><th>Name</th><th>Email</th><th>Reg. No.</th><th>Specialization</th><th>Action</th></tr></thead>
+              <tbody>
+                <% unverifiedDoctors.forEach(d => { %>
+                  <tr>
+                    <td><div class="d-flex align-items-center gap-2"><div class="avatar avatar-sm av-purple"><%= d.user?.name?.charAt(0) %></div><span class="fw-600">Dr. <%= d.user?.name %></span></div></td>
+                    <td class="text-muted small"><%= d.user?.email %></td>
+                    <td><span class="badge-purple"><%= d.registrationNumber || 'Not provided' %></span></td>
+                    <td class="text-muted small"><%= d.specialization || '—' %></td>
+                    <td>
+                      <form action="/admin/doctors/<%= d._id %>/verify" method="POST" style="display:inline">
+                        <button type="submit" class="btn btn-green btn-sm px-3"><i class="fas fa-check me-1"></i>Verify</button>
+                      </form>
+                    </td>
+                  </tr>
+                <% }) %>
+              </tbody>
+            </table>
+          </div>
+        <% } %>
+      </div>
+    </div>
+  </main>
+</div>
+<%- include('../partials/footer') %>
